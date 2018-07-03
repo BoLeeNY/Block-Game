@@ -5,14 +5,21 @@
     outline: solid 2px black;
     margin: auto;
     width: 600px;
-    padding: auto;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.row {
+.cell {
     height: 100px;
     width: 100px;
-    margin: 0;
-    padding: 0;
+    outline: solid 1px black;
+}
+
+/*.row {
+    height: 100px;
+    width: 100px;
+
     outline:  solid 1px black;
     display: inline-block;
     z-index: -1;
@@ -21,31 +28,28 @@
 .col {
     height: 100px;
     width: 100px;
-    margin: 0;
-    padding: 0;
+
     outline:  solid 1px black;
     display: inline-block;
     z-index: -1;
-}   
+}   */
 
 .block {
     position: absolute;
-    outline: solid 5px blue;
+
     height: 100px;
     width: 200px;
-    margin: 0;
-    padding: 0;
+
     display:inline-block;
 }
 
-.block3 {
+/*.block3 {
     position: absolute;
     outline: solid 1px black;
     height: 100px;
     width: 300px;
     transform: rotate(90deg);
-    margin: 0;
-    padding: 0;
+
     display:inline-block;
 }
 
@@ -54,7 +58,19 @@
     outline: solid 1px black;
     height: 100px;
     width: 200px;
-    margin: 0;
-    padding: 0;
+
     display: inline-block;
+} */
+
+.three {
+    position: absolute;
+    height: 100px;
+    width: 300px;
+    transform: rotate(90deg);
 }
+
+.one {
+    outline: solid 3px blue;
+    top: 200px;
+}
+

@@ -1,17 +1,32 @@
 function createGrid() {
+    const cells = [
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 5, 6]
+    ]; 
+
     const container = document.querySelector('#container');
-    for ( let i = 0; i < 6; i += 1) {
-        let row = document.createElement('div');
-        row.className = `row`;
-        container.appendChild(row);
-        for (let j = 0; j < 6; j += 1) {
-            const col = document.createElement('div');
-            col.className = `col`;
-            row.appendChild(col);
+    for ( let i = 0; i < cells.length; i += 1) {
+        //let row = document.createElement('div');
+        //row.className = `row`;
+        for (let j = 0; j < cells.length; j += 1) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            container.appendChild(cell);
+            //const col = document.createElement('div');
+            //col.className = `col`;
+            //row.appendChild(col);
         }
+        //container.appendChild(row);
     }
+    //document.body.appendChild(container);
 }
-createGrid();
+createGrid(); 
+
+
 
 const mainBlock = {x:0,y:0};
 const blocks = [{x:3, y:3},{x:3,y:4}];
@@ -46,9 +61,9 @@ const isThereABlock = function(x, y) {
 };
 
 const moveBlock = function(x, y) {
-    const mainBlock = document.getElementById('#main_block');
-    mainBlock.style.top = (y * 100).toString() + 'px';
-    mainBlock.style.right = (x * 100).toString() + 'px';
+    const mainBlock = document.querySelector('.one');
+    mainBlock.style.top = (y * 100) + 'px';
+    mainBlock.style.left = (x * 100) + 'px';
     //if (isThereABlock(x, y))
 }
 
