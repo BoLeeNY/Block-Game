@@ -59,7 +59,7 @@ const isThereABlock = function(x, y) {
     }
     return false;
 };
-
+//moves block by pixels
 const moveBlock = function(x, y) {
     const mainBlock = document.querySelector('.one');
     mainBlock.style.top = (y * 100) + 'px';
