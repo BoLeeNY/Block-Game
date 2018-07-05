@@ -1,11 +1,11 @@
 function createGrid() {
     const cells = [
-        [1, 2, 3, 4, 5, 6],
-        [1, 2, 3, 4, 5, 6],
-        [1, 2, 3, 4, 5, 6],
-        [1, 2, 3, 4, 5, 6],
-        [1, 2, 3, 4, 5, 6],
-        [1, 2, 3, 4, 5, 6]
+        [0, 1 ,2 ,3 ,4 ,5],
+        [0, 1 ,2 ,3 ,4 ,5],
+        [0, 1 ,2 ,3 ,4 ,5],
+        [0, 1 ,2 ,3 ,4 ,5],
+        [0, 1 ,2 ,3 ,4 ,5],
+        [0, 1 ,2 ,3 ,4 ,5]
     ]; 
 
     const container = document.querySelector('#container');
@@ -29,17 +29,18 @@ createGrid();
 
 
 const mainBlock = {x:0,y:0};
-const blocks = [{x:3, y:3},{x:3,y:4}];
+const horiBlock = {x:0,y:3};
+const blocks = [{x:4, y:3},{x:4,y:4}];
 
 
-
+// checks if spaces youre moving to are inside the grid
 const insideGrid = function(x, y) {
     if (x < 0 || y < 0 || x > 6 || y > 6) {
         return false;
     }
     return true;
 }
-
+// if the move is inside the grid and theres no block, you can move
 const allowedMove = function(x, y) {
     if (!insideGrid(x, y)) {
         return false;
@@ -49,52 +50,71 @@ const allowedMove = function(x, y) {
     }
     return true;
 }
-
+// checks if theres a block in the way
 const isThereABlock = function(x, y) {
     for ( let i = 0; i < blocks.length; i += 1) {
-        const block = blocks[i];
-        if ( block.x === x && block.y === y) {
+        const aBlock = blocks[i];
+        if ( aBlock.x === x && aBlock.y === y) {
             return true;
         }
     }
     return false;
 };
-//moves block by pixels
-const moveBlockVert = function(x, y) {
-    const vertBlock = document.querySelector('.vert');
-    vertBlock.style.top = (y * 100) + 'px';
-    //if (isThereABlock(x, y))
+//moves block vertically by pixels
+const moveBlock = function(x, y) {
+    const block = document.querySelector('.block');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
 }
 
-const moveBlockHori = function(x, y) {
-    const horiBlock = document.querySelector('.hori');
-    horiBlock.style.left = (x * 100) + 'px';
-}
 
 const moveRight = function() {
-    if (allowedMove(horiBlock.x + 1, horiBlock.y)) {
-        horiBlock.x += 1;
-        moveBlock(horiBlock.x, horiBlock.y);
+    if (allowedMove(block.x + 1, block.y)) {
+        block.x += 1;
+        moveBlock(block.x, block.y);
     }
 }
 
 const moveLeft = function() {
-    if (allowedMove(hori.Block.x -= 1, horiBlock.y)) {
-        horiBlock.x -= 1;
-        moveBlock(horiBlock.x, horiBlock.y);
+    if (allowedMove(block.x -= 1, block.y)) {
+        block.x -= 1;
+        moveBlock(block.x, block.y);
     }
 }
 
 const moveUp = function() {
-    if (allowedMove(vertBlock.x, vertBlock.y -= 1)) {
-        vertBlock.y -= 1;
-        moveBlock(vertBlock.x, vertBlock.y);
+    if (allowedMove(block.x, block.y -= 1)) {
+        block.y -= 1;
+        moveBlock(block.x, block.y);
     }
 }
 
 const moveDown = function() {
-    if (allowedMove(vertBlock.x, vertBlock.y += 1)) {
-        vertBlock.y += 1;
-        moveBlock(vertBlock.x, vertBlock.y);
+    if (allowedMove(block.x, block.y += 1)) {
+        block.y += 1;
+        moveBlock(block.x, block.y);
     }
+}
+
+
+const container = document.querySelector('#container');
+container.addEventListener('click', function(e) {
+    if (e.target.class === document.querySelector('.hori')) {
+        moveRight();
+        moveLeft();
+    } else {
+        moveUp();
+        moveDown();
+    }
+});
+
+
+const win = function() {
+        if (document.querySelector('.winner') !== null) {
+            return;
+        }
+        const winEl = document.createElement('div');
+        winEl.className = 'winner';
+        winEl.innerHTML = 'We Out!';
+        document.getElementById('container').appendChild(winEl);
 }

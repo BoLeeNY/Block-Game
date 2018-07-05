@@ -21,16 +21,17 @@
     height: 100px;
     width: 200px;
     outline: solid 1px black;
-    display:inline-block;
+    display: inline-block;
 }
 
-/*.vert {transform: rotate(90deg);}*/
+.vert {transform: rotate(90deg);}
 
 .three {
-    position: absolute;
     height: 100px;
     width: 300px;
 }
+/* fixes alignment problem*/
+.two {transform-origin: top;}
 
 .one {
     outline: solid 3px blue;
@@ -41,8 +42,8 @@
 #block3b {left: 100px; top: 100px;}
 #block2a {left: 400px; top: 200px;}
 #block2b {left: 500px; top: 200px;}
-#block2c {top: 300px;}
-#block2d {left: 100px; top: 300px;}
+#block2c {top: 400px;}
+#block2d {left: 100px; top: 400px;}
 #block2e {left: 500px; top: 400px;}
 #block2f {top: 500px; left: 100px;}
 #block2g {top: 400px; left: 200px;}
