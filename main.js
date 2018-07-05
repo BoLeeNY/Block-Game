@@ -60,17 +60,41 @@ const isThereABlock = function(x, y) {
     return false;
 };
 //moves block by pixels
-const moveBlock = function(x, y) {
-    const mainBlock = document.querySelector('.one');
-    mainBlock.style.top = (y * 100) + 'px';
-    mainBlock.style.left = (x * 100) + 'px';
+const moveBlockVert = function(x, y) {
+    const vertBlock = document.querySelector('.vert');
+    vertBlock.style.top = (y * 100) + 'px';
     //if (isThereABlock(x, y))
 }
 
+const moveBlockHori = function(x, y) {
+    const horiBlock = document.querySelector('.hori');
+    horiBlock.style.left = (x * 100) + 'px';
+}
+
 const moveRight = function() {
-    if (allowedMove(mainBlock.x + 1, mainBlock.y)) {
-        mainBlock.x += 1;
-        moveBlock(mainBlock.x, mainBlock.y);
+    if (allowedMove(horiBlock.x + 1, horiBlock.y)) {
+        horiBlock.x += 1;
+        moveBlock(horiBlock.x, horiBlock.y);
     }
 }
 
+const moveLeft = function() {
+    if (allowedMove(hori.Block.x -= 1, horiBlock.y)) {
+        horiBlock.x -= 1;
+        moveBlock(horiBlock.x, horiBlock.y);
+    }
+}
+
+const moveUp = function() {
+    if (allowedMove(vertBlock.x, vertBlock.y -= 1)) {
+        vertBlock.y -= 1;
+        moveBlock(vertBlock.x, vertBlock.y);
+    }
+}
+
+const moveDown = function() {
+    if (allowedMove(vertBlock.x, vertBlock.y += 1)) {
+        vertBlock.y += 1;
+        moveBlock(vertBlock.x, vertBlock.y);
+    }
+}
