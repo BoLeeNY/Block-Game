@@ -16,6 +16,10 @@
     outline: solid 1px black;
 }
 
+div:focus {
+    border: solid 2px yellow;
+}
+
 .block {
     position: absolute;
     height: 100px;
