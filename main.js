@@ -26,12 +26,13 @@ const block = {x:0,y:2};
 const threeBlock = [{x:2, y:0}, {x: 3, y: 0}];
 const twoBlock = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
 const horiTwoBlock = [{x: 2, y: 4}, {x: 1, y: 5}];
+const blocks = [{block},{threeBlock},{twoBlock},{horiTwoBlock}];
 
 const render3 = () => {
     for (let i = 0; i < threeBlock.length; i++) {
       const threeB = threeBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.classList.add (`xy${threeBlock[i].x}${threeBlock[i].y}`, 'three');
+      blockElement.classList.add (`xy${threeBlock[i].x}${threeBlock[i].y}`, 'three', 'block');
       blockElement.style.left = (threeB.x * 100).toString() + 'px';
       blockElement.style.top = (threeB.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -43,7 +44,7 @@ const render3 = () => {
     for (let i = 0; i < twoBlock.length; i++) {
       const twoB = twoBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.className = `xy${twoBlock[i].x}${twoBlock[i].y}`;
+      blockElement.classList.add(`xy${twoBlock[i].x}${twoBlock[i].y}`, 'two', 'block');
       blockElement.style.left = (twoB.x * 100).toString() + 'px';
       blockElement.style.top = (twoB.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -55,7 +56,7 @@ const render3 = () => {
     for (let i = 0; i < horiTwoBlock.length; i++) {
       const hori2 = horiTwoBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.className = `xy${horiTwoBlock[i].x}${horiTwoBlock[i].y}`;
+      blockElement.classList.add(`xy${horiTwoBlock[i].x}${horiTwoBlock[i].y}`, 'hori2', 'block');
       blockElement.style.left = (hori2.x * 100).toString() + 'px';
       blockElement.style.top = (hori2.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -64,14 +65,11 @@ const render3 = () => {
   renderHori2();
 
   const renderMain = () => {
-    for (let i = 0; i < block.length; i++) {
-      const block = block[i];
       const blockElement = document.createElement('div');
-      blockElement.className = `xy${block[i].x}${block[i].y}`;
-      blockElement.style.left = (rock.x * 100).toString() + 'px';
-      blockElement.style.top = (rock.y * 100).toString() + 'px';
+      blockElement.classList.add(`xy${block.x}${block.y}`, 'main', 'block');
+      blockElement.style.left = (block.x * 100).toString() + 'px';
+      blockElement.style.top = (block.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
-    }
   };
   renderMain();
 
@@ -104,7 +102,7 @@ const isThereABlock = function(x, y) {
 };
 //moves block vertically by pixels
 const moveBlock = function(x, y) {
-    const block = document.querySelector(`#${newClick}`);
+    const block = document.querySelector(`.${newClick}`);
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
@@ -138,24 +136,24 @@ const moveDown = () => {
     }
 }
 
-const block2a = document.querySelector(`#block2a`);
+//const block2a = document.querySelector('.block');
 //block2a.onfocus = function() {movement()}();
-block2a.onclick = function() {
-    block2a.focus();
-     movement();
-}
+//newClick.onclick = function() {
+//    newClick.focus();
+//    movement();
+//}
 let newClick;
-let allInfo;
+//let allInfo;
 const aBlock=document.querySelectorAll('.block');
 for (i = 0; i <aBlock.length; i += 1) {
-    aBlock[i].addEventListener('focus', function(e) {
-        const focusBlock = e.target.id;
-        const blockStyle = e.target.getBoundingClientRect();
+    aBlock[i].addEventListener('click', function(e) {
+        const focusBlock = e.target.classList[0];
+        //const blockStyle = e.target.getBoundingClientRect();
         newClick = focusBlock;
-        allInfo = [focusBlock, blockStyle];
+        movement();
+        //allInfo = [focusBlock, blockStyle];
         console.log(focusBlock);
-        console.log(newClick);
-        console.log(blockStyle);
+        //console.log(blockStyle);
 
 })
 }

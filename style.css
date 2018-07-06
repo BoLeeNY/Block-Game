@@ -16,6 +16,44 @@
     outline: solid 1px black;
 }
 
+.three {
+    height: 300px;
+    width: 100px;
+    background-color: blue;
+    position: absolute;
+    border: solid 1px black;
+}
+
+.two {
+    height: 200px;
+    width: 100px;
+    background-color: red;
+    position: absolute;
+    border: solid 1px black;
+}
+
+.hori2 {
+    height: 100px;
+    width: 200px;
+    background-color: purple;
+    position: absolute;
+    border: solid 1px black;
+}
+
+.main {
+    height: 100px;
+    width: 200px;
+    background-color: gold;
+    position: absolute;
+    border: solid 1px black;
+}
+
+
+
+
+
+
+/*
 div:focus {
     border: solid 2px yellow;
 }
@@ -41,52 +79,5 @@ div:focus {
     outline: solid 3px blue;
     top: 200px;
 }
-
-#block3a {left: 200px; top: 100px;}
-#block3b {left: 100px; top: 100px;}
-#block2a {left: 400px; top: 200px;}
-#block2b {left: 500px; top: 200px;}
-#block2c {top: 400px;}
-#block2d {left: 100px; top: 400px;}
-#block2e {left: 500px; top: 400px;}
-#block2f {top: 500px; left: 100px;}
-#block2g {top: 400px; left: 200px;}
-/*.row {
-    height: 100px;
-    width: 100px;
-
-    outline:  solid 1px black;
-    display: inline-block;
-    z-index: -1;
-}
-
-.col {
-    height: 100px;
-    width: 100px;
-
-    outline:  solid 1px black;
-    display: inline-block;
-    z-index: -1;
-}   */
-
-
-/*.block3 {
-    position: absolute;
-    outline: solid 1px black;
-    height: 100px;
-    width: 300px;
-    transform: rotate(90deg);
-
-    display:inline-block;
-}
-
-.block2 {
-    position: absolute;
-    outline: solid 1px black;
-    height: 100px;
-    width: 200px;
-
-    display: inline-block;
-} */
 
 
