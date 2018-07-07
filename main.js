@@ -27,7 +27,17 @@ const block = {x:0,y:2};
 const threeBlock = [{x:2, y:0}, {x: 3, y: 0}];
 const twoBlock = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
 const horiTwoBlock = [{x: 2, y: 4}, {x: 1, y: 5}];
-const blocks = [{x:2, y:0}, {x: 3, y: 0},{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3},{x: 2, y: 4}, {x: 1, y: 5}];
+const blocks = [
+    {x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2},
+    {x: 3, y: 0}, {x: 3, y: 1}, {x: 3, y: 2},
+    {x: 4, y: 1}, {x: 4, y: 2},
+    {x: 5, y: 1}, {x: 5, y: 2},
+    {x: 0, y: 3}, {x: 0, y: 4},
+    {x: 1, y: 3}, {x: 0, y: 4},
+    {x: 5, y: 3}, {x: 5, y: 4},
+    {x: 2, y: 4}, {x: 3, y: 4},
+    {x: 1, y: 5}, {x: 2, y: 5},
+    {x: 0, y: 2}, {x: 1, y: 2}];
 
 const render3 = () => {
     for (let i = 0; i < threeBlock.length; i++) {
@@ -146,12 +156,7 @@ const moveDown = () => {
 
 
 
-//const block2a = document.querySelector('.block');
-//block2a.onfocus = function() {movement()}();
-//newClick.onclick = function() {
-//    newClick.focus();
-//    movement();
-//}
+
 let newClick;
 //let allInfo;
 /*const aBlock=document.querySelectorAll('.block');
@@ -193,20 +198,7 @@ const movement = function() {
 }
 
 
-/*const container = document.querySelector('#container');
-container.addEventListener('click', function(e) {
-    const horizontalBlocks = document.querySelector('.hori');
-    e.preventDefault();
-    for (i = 0; i < horizontalBlocks.length; i += 1) {
-        if (e.target === horizontalBlocks) {
-            moveRight();
-            moveLeft();
-        } else {
-            moveUp();
-            moveDown();
-    }
-    }
-});*/
+
 
 
 const win = function() {
@@ -219,19 +211,7 @@ const win = function() {
         document.getElementById('container').appendChild(winEl);
 }
 
-/*function allowDrop(ev) {
-    ev.preventDefault();
-}
-function drag(ev) {
-    ev.dataTransfer.setData('text', ev.target.classList);
-}
-function drop(ev) {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData('text', '');
-    ev.target.appendChild(document.getElementById(data));
-    ev.stopPropagation();
-    return false;
-}*/
+
 
 // MOVEMENT OF THREE BLOCKS
 const moveThreeBlock = function(x, y) {
@@ -243,34 +223,45 @@ const moveThreeBlock = function(x, y) {
 const moveRight3 = () => {
     if (allowedMove(threeBlock[0].x + 1, threeBlock[0].y)) {
         threeBlock[0].x += 1;
+        blocks[0].x += 1;
+        blocks[1].x += 1;
+        blocks[2].x += 1;
         moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
-        blocks[0].x = threeBlock[0].x;
-        
+        //blocks[0].x = threeBlock[0].x;
     }
 }
 
 const moveLeft3 = () => {
     if (allowedMove(threeBlock[0].x - 1, threeBlock[0].y)) {
         threeBlock[0].x -= 1;
+        blocks[0].x -= 1;
+        blocks[1].x -= 1;
+        blocks[2].x -= 1;
         moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
-        blocks[0].x = threeBlock[0].x;
+        //blocks[0].x = threeBlock[0].x;
 
     }
 }
 
 const moveUp3 = () => {
+    blocks[1].y -= 1;
+    blocks[2].y -= 1;
     if (allowedMove(threeBlock[0].x, threeBlock[0].y - 1)) {
         threeBlock[0].y -= 1;
+        blocks[0].y -= 1;
         moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
-        blocks[0].y = threeBlock[0].y;
+        //blocks[0].y = threeBlock[0].y;
     }
 }
 
 const moveDown3 = () => {
+    blocks[1].y += 1;
+    blocks[2].y += 1;
     if (allowedMove(threeBlock[0].x, threeBlock[0].y + 1)) {
         threeBlock[0].y += 1;
+        blocks[0].y += 1;
         moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
-        blocks[0].y = threeBlock[0].y;
+        //blocks[0].y = threeBlock[0].y;
     }
 }
 const movement3 = function() {
