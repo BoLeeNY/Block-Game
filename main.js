@@ -13,7 +13,8 @@ function createGrid() {
         for (let j = 0; j < cells.length; j += 1) {
             const cell = document.createElement('div');
             cell.className = 'cell';
-            //cell.setAttribute('ondrop','drop(ev)');
+            //cell.setAttribute('ondrop','drop(event)');
+            //cell.setAttribute('ondragover', 'allowDrop(event)');
             container.appendChild(cell);
         }
     }
@@ -26,13 +27,13 @@ const block = {x:0,y:2};
 const threeBlock = [{x:2, y:0}, {x: 3, y: 0}];
 const twoBlock = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
 const horiTwoBlock = [{x: 2, y: 4}, {x: 1, y: 5}];
-const blocks = [{block},{threeBlock},{twoBlock},{horiTwoBlock}];
+const blocks = [{x:2, y:0}, {x: 3, y: 0},{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3},{x: 2, y: 4}, {x: 1, y: 5}];
 
 const render3 = () => {
     for (let i = 0; i < threeBlock.length; i++) {
       const threeB = threeBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.classList.add (`xy${threeBlock[i].x}${threeBlock[i].y}`, 'three', 'block');
+      blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');
       blockElement.style.left = (threeB.x * 100).toString() + 'px';
       blockElement.style.top = (threeB.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -44,7 +45,7 @@ const render3 = () => {
     for (let i = 0; i < twoBlock.length; i++) {
       const twoB = twoBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.classList.add(`xy${twoBlock[i].x}${twoBlock[i].y}`, 'two', 'block');
+      blockElement.classList.add(`x${twoBlock[i].x}y${twoBlock[i].y}`, 'two', 'block');
       blockElement.style.left = (twoB.x * 100).toString() + 'px';
       blockElement.style.top = (twoB.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -56,9 +57,10 @@ const render3 = () => {
     for (let i = 0; i < horiTwoBlock.length; i++) {
       const hori2 = horiTwoBlock[i];
       const blockElement = document.createElement('div');
-      blockElement.classList.add(`xy${horiTwoBlock[i].x}${horiTwoBlock[i].y}`, 'hori2', 'block');
+      blockElement.classList.add(`x${horiTwoBlock[i].x}y${horiTwoBlock[i].y}`, 'hori2', 'block');
       blockElement.style.left = (hori2.x * 100).toString() + 'px';
       blockElement.style.top = (hori2.y * 100).toString() + 'px';
+      //blockElement.setAttribute('draggable', true);
       document.querySelector('#container').appendChild(blockElement);
     }
   };
@@ -66,7 +68,7 @@ const render3 = () => {
 
   const renderMain = () => {
       const blockElement = document.createElement('div');
-      blockElement.classList.add(`xy${block.x}${block.y}`, 'main', 'block');
+      blockElement.classList.add(`x${block.x}y${block.y}`, 'main', 'block');
       blockElement.style.left = (block.x * 100).toString() + 'px';
       blockElement.style.top = (block.y * 100).toString() + 'px';
       document.querySelector('#container').appendChild(blockElement);
@@ -75,7 +77,7 @@ const render3 = () => {
 
 // checks if spaces youre moving to are inside the grid
 const insideGrid = function(x, y) {
-    if (x < 0 || y < 0 || x > 6 || y > 6) {
+    if (x < 0 || y < 0 || x > 5 || y > 5) {
         return false;
     }
     return true;
@@ -93,20 +95,20 @@ const allowedMove = function(x, y) {
 // checks if theres a block in the way
 const isThereABlock = function(x, y) {
     for ( let i = 0; i < blocks.length; i += 1) {
-        const aBlock = blocks[i];
-        if ( aBlock.x === x && aBlock.y === y) {
-            return true;
-        }
+            const aBlock = blocks[i];
+            if ( aBlock.x === x && aBlock.y === y) {
+                return true;
+            }
     }
     return false;
 };
-//moves block vertically by pixels
+
+
 const moveBlock = function(x, y) {
-    const block = document.querySelector(`.${newClick}`);
+    const block = document.querySelector(`.x0y2`);
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
-
 
 const moveRight = () => {
     if (allowedMove(block.x + 1, block.y)) {
@@ -116,21 +118,21 @@ const moveRight = () => {
 }
 
 const moveLeft = () => {
-    if (allowedMove(block.x -= 1, block.y)) {
+    if (allowedMove(block.x - 1, block.y)) {
         block.x -= 1;
         moveBlock(block.x, block.y);
     }
 }
 
 const moveUp = () => {
-    if (allowedMove(block.x, block.y -= 1)) {
+    if (allowedMove(block.x, block.y - 1)) {
         block.y -= 1;
         moveBlock(block.x, block.y);
     }
 }
 
 const moveDown = () => {
-    if (allowedMove(block.x, block.y += 1)) {
+    if (allowedMove(block.x, block.y + 1)) {
         block.y += 1;
         moveBlock(block.x, block.y);
     }
@@ -209,14 +211,16 @@ const win = function() {
         document.getElementById('container').appendChild(winEl);
 }
 
-function allowDrop(ev) {
+/*function allowDrop(ev) {
     ev.preventDefault();
 }
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData('text', ev.target.classList);
 }
 function drop(ev) {
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
+    const data = ev.dataTransfer.getData('text', '');
     ev.target.appendChild(document.getElementById(data));
-}
+    ev.stopPropagation();
+    return false;
+}*/
