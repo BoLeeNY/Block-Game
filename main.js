@@ -36,6 +36,9 @@ const render3 = () => {
       blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');
       blockElement.style.left = (threeB.x * 100).toString() + 'px';
       blockElement.style.top = (threeB.y * 100).toString() + 'px';
+      blockElement.addEventListener('click', function() {
+          movement3();
+      })
       document.querySelector('#container').appendChild(blockElement);
     }
   };
@@ -71,6 +74,9 @@ const render3 = () => {
       blockElement.classList.add(`x${block.x}y${block.y}`, 'main', 'block');
       blockElement.style.left = (block.x * 100).toString() + 'px';
       blockElement.style.top = (block.y * 100).toString() + 'px';
+      blockElement.addEventListener('onfocus', function() {
+          movement();
+      })
       document.querySelector('#container').appendChild(blockElement);
   };
   renderMain();
@@ -138,6 +144,8 @@ const moveDown = () => {
     }
 }
 
+
+
 //const block2a = document.querySelector('.block');
 //block2a.onfocus = function() {movement()}();
 //newClick.onclick = function() {
@@ -146,7 +154,7 @@ const moveDown = () => {
 //}
 let newClick;
 //let allInfo;
-const aBlock=document.querySelectorAll('.block');
+/*const aBlock=document.querySelectorAll('.block');
 for (i = 0; i <aBlock.length; i += 1) {
     aBlock[i].addEventListener('click', function(e) {
         const focusBlock = e.target.classList[0];
@@ -158,7 +166,7 @@ for (i = 0; i <aBlock.length; i += 1) {
         //console.log(blockStyle);
 
 })
-}
+}*/
 
 const movement = function() {
     console.log('movement');
@@ -224,3 +232,67 @@ function drop(ev) {
     ev.stopPropagation();
     return false;
 }*/
+
+// MOVEMENT OF THREE BLOCKS
+const moveThreeBlock = function(x, y) {
+    const block = document.querySelector(`.x2y0`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveRight3 = () => {
+    if (allowedMove(threeBlock[0].x + 1, threeBlock[0].y)) {
+        threeBlock[0].x += 1;
+        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+        blocks[0].x = threeBlock[0].x;
+        
+    }
+}
+
+const moveLeft3 = () => {
+    if (allowedMove(threeBlock[0].x - 1, threeBlock[0].y)) {
+        threeBlock[0].x -= 1;
+        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+        blocks[0].x = threeBlock[0].x;
+
+    }
+}
+
+const moveUp3 = () => {
+    if (allowedMove(threeBlock[0].x, threeBlock[0].y - 1)) {
+        threeBlock[0].y -= 1;
+        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+        blocks[0].y = threeBlock[0].y;
+    }
+}
+
+const moveDown3 = () => {
+    if (allowedMove(threeBlock[0].x, threeBlock[0].y + 1)) {
+        threeBlock[0].y += 1;
+        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+        blocks[0].y = threeBlock[0].y;
+    }
+}
+const movement3 = function() {
+    console.log('movement');
+    document.body.addEventListener('keydown', function(evt) {
+        const keyCode = evt.keyCode;
+        if ([37, 38, 39, 40].includes(keyCode)){
+            evt.preventDefault;
+        }
+        switch(keyCode) {
+            case 37:
+            moveLeft3();
+            break;
+            case 38:
+            moveUp3();
+            break;
+            case 39:
+            moveRight3();
+            break;
+            case 40:
+            moveDown3();
+            break;
+        }
+    })
+}
