@@ -25,7 +25,7 @@ createGrid();
 
 const block = {x:0,y:2};
 const threeBlock = [{x:2, y:0}, {x: 3, y: 0}];
-const twoBlock = [{x: 4, y: 1}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
+const twoBlock = [{x: 4, y: 1}, {x:4, y: 2}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
 const horiTwoBlock = [{x: 2, y: 4}, {x: 1, y: 5}];
 const blocks = [
     {x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2},
@@ -198,9 +198,16 @@ for (i = 0; i <aBlock.length; i += 1) {
         } else if (focusBlock === 'x2y0') {
             movement3();
         } else if (focusBlock === 'x3y0') {
-            movement3a();
+            if (allowedMove(threeBlock[1].x, threeBlock[1].y - 1)) {
+            moveUp3a();} else if (allowedMove(threeBlock[1].x, threeBlock[1].y + 3)) {
+                moveDown3a();
+            }
         } else if (focusBlock === 'x4y1') {
-            movement2a();
+            if (allowedMove(twoBlock[0].x, twoBlock[0].y - 1)) {
+                moveUp2a();} 
+            }else if (focusBlock === 'x4y2') {
+                if (allowedMove(twoBlock[0].x, twoBlock[0].y + 2)) {
+                moveDown2a();}
         } else if (focusBlock === 'x5y1') {
             movement2b();
         }
@@ -276,22 +283,28 @@ const moveThreeBlock2 = function(x, y) {
 }
 
 const moveUp3a = () => {
-    blocks[4].y -= 1;
-    blocks[5].y -= 1;
-    if (allowedMove(threeBlock[1].x, threeBlock[1].y - 1)) {
-        threeBlock[1].y -= 1;
-        blocks[3].y -= 1;
-        moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+    for (let i=0;i<6;i+=1) {
+        blocks[4].y -= i;
+        blocks[5].y -= i;
+        if (allowedMove(threeBlock[1].x, threeBlock[1].y - i)) {
+            threeBlock[1].y -= i;
+            blocks[3].y -= i;
+            moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+        }
+
     }
 }
 
 const moveDown3a = () => {
-    blocks[4].y += 1;
-    blocks[5].y += 1;
-    if (allowedMove(threeBlock[1].x, threeBlock[1].y + 1)) {
-        threeBlock[1].y += 1;
-        blocks[3].y += 1;
-        moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+    for(let i=0;i<6;i+=1) {
+        blocks[4].y += i;
+        blocks[5].y += i;
+        if (allowedMove(threeBlock[1].x, threeBlock[1].y + i)) {
+            threeBlock[1].y += i;
+            blocks[3].y += i;
+            moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+        }
+
     }
 }
 const movement3a = function() {
@@ -317,22 +330,37 @@ const moveTwoBlockA = function(x, y) {
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
+const moveTwoBlockA2 = function(x, y) {
+    const block = document.querySelector('.x4y2');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
 
 const moveUp2a = () => {
-    blocks[7].y -= 1;
-    if (allowedMove(twoBlock[0].x, twoBlock[0].y - 1)) {
-        twoBlock[0].y -= 1;
-        blocks[6].y -= 1;
-        moveTwoBlockA(twoBlock[0].x, twoBlock[0].y);
+    for (let i = -1; i <6; i+=1){
+        if (allowedMove(twoBlock[0].x, twoBlock[0].y - i)) {
+            twoBlock[1].y -= i;
+            twoBlock[0].y -= i;
+            blocks[6].y -= i;
+            blocks[7].y -= i;
+            moveTwoBlockA(twoBlock[0].x, twoBlock[0].y);
+            moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y)
+        }
+
     }
 }
 
 const moveDown2a = () => {
-    blocks[7].y += 1;
-    if (allowedMove(twoBlock[0].x, twoBlock[0].y + 1)) {
-        twoBlock[0].y += 1;
-        blocks[6].y += 1;
-        moveTwoBlockA(twoBlock[0].x, twoBlock[0].y);
+    for (let i = -1; i<6;i+=1) {
+        if (allowedMove(twoBlock[1].x, twoBlock[1].y + i)) {
+            twoBlock[1].y += i;
+            twoBlock[0].y += i;
+            blocks[6].y += i;
+            blocks[7].y += i;
+            moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y);
+            moveTwoBlockA(twoBlock[0].x, twoBlock[0].y)
+        }
+
     }
 }
 const movement2a = function() {
@@ -353,7 +381,7 @@ const movement2a = function() {
     })
 }
 //MOVEMENT OF TWO BLOCK x5y1
-const moveTwoBlockB = function(x, y) {
+/*const moveTwoBlockB = function(x, y) {
     const block = document.querySelector(`.x5y1`);
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
@@ -392,4 +420,4 @@ const movement2b = function() {
             break;
         }
     })
-}
+}*/
