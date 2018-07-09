@@ -28,7 +28,8 @@ So I created a new array that I can reference for the collision detection.
 The movement function would only allow the block to move if there was not a block in the way and it was still inside the grid.
 ```if (allowedMove(block[0].x - 1, block[0].y)) { 
 block[0].x -= 1; 
-moveBlock(block[0].x, block[0].y);}```
+moveBlock(block[0].x, block[0].y);}
+```
 <br>
 
 At this point, the game has all it needs to work. The pieces are pre-positioned into the puzzle layout.
