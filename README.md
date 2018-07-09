@@ -18,7 +18,9 @@ I began with creating a 6 x 6 grid. Then I created all 10 of the blocks to have 
 I created an array of coordinates for each of the blocks so I find their exact positions.
 I had 4 different types of blocks to create. The Main block which is horizontal, 3 piece blocks that are vertical, 2 piece blocks that are vertical, and 2 piece blocks that are horizontal.
 I created a unique class for each piece by referencing their coordinates.
-```blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');```
+```
+blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');
+```
 <br>
 
 Now that I have the block positions, I can make them move.
