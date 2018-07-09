@@ -10,7 +10,7 @@ This project was quite a bit more complicated than I had first thought.
 I began by trying to copy a single level of Unblock Me.
 
 ## Wireframe
-![alt text](https://git.generalassemb.ly/BoLee/Block-Game/tree/master/images/wireframe.JPG "wireframe.jpg)
+![alt text](https://git.generalassemb.ly/BoLee/Block-Game/tree/master/images/wireframe.JPG "wireframe.jpg")
 
 ## Work Progress
 
