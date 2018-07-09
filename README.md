@@ -18,7 +18,7 @@ I began with creating a 6 x 6 grid. Then I created all 10 of the blocks to have 
 I created an array of coordinates for each of the blocks so I find their exact positions.
 I had 4 different types of blocks to create. The Main block which is horizontal, 3 piece blocks that are vertical, 2 piece blocks that are vertical, and 2 piece blocks that are horizontal.
 I created a unique class for each piece by referencing their coordinates.
-"blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');"
+```blockElement.classList.add (`x${threeBlock[i].x}y${threeBlock[i].y}`, 'three', 'block');```
 <br>
 
 Now that I have the block positions, I can make them move.
@@ -26,7 +26,7 @@ The idea is to have the blocks slide in the direction that they are oriented.
 But also, the blocks should not be able to pass through other blocks or leave the grid.
 So I created a new array that I can reference for the collision detection.
 The movement function would only allow the block to move if there was not a block in the way and it was still inside the grid.
-"if (allowedMove(block[0].x - 1, block[0].y)) { block[0].x -= 1; moveBlock(block[0].x, block[0].y);}"
+```if (allowedMove(block[0].x - 1, block[0].y)) { block[0].x -= 1; moveBlock(block[0].x, block[0].y);}```
 <br>
 
 At this point, the game has all it needs to work. The pieces are pre-positioned into the puzzle layout.
