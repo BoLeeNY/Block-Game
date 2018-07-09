@@ -33,6 +33,7 @@ const moveLeft = () => {
 if (allowedMove(block[0].x - 1, block[0].y)) { 
 block[0].x -= 1; 
 moveBlock(block[0].x, block[0].y);}
+}
 ```
 <br>
 
