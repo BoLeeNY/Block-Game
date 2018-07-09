@@ -1,4 +1,5 @@
-
+//The main code of this game has been based on the Blerf code
+//Blerf can be found here https://absorbing-property.glitch.me
 
 const block = [{x: 0, y: 2}, {x: 1, y: 2}]; //Main Block
 const threeBlock = [
