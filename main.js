@@ -138,49 +138,42 @@ const moveBlock2 = function(x, y) {
     block.style.left = (x * 100).toString() + 'px';
 }
 
-const moveRight = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(block[1].x + i, block[1].y)) {
-            block[1].x += i;
-            block[0].x += i;
-            blocks[20].x += i;
-            blocks[21].x += i;
-            moveBlock2(block[1].x, block[1].y);
-            moveBlock(block[0].x, block[0].y);
-        }
-    }
-}
-
 const moveLeft = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(block[0].x - i, block[0].y)) {
-            block[0].x -= i;
-            block[1].x -= i;
-            blocks[20].x -= i;
-            blocks[21].x -= i;
+        if (allowedMove(block[0].x - 1, block[0].y)) {
+            block[0].x -= 1;
+            block[1].x -= 1;
+            blocks[20].x -= 1;
+            blocks[21].x -= 1;
             moveBlock(block[0].x, block[0].y);
             moveBlock2(block[1].x, block[1].y);
         }
-    }
+}
+const moveRight = () => {
+        if (allowedMove(block[1].x + 1, block[1].y)) {
+            block[1].x += 1;
+            block[0].x += 1;
+            blocks[21].x += 1;
+            blocks[20].x += 1;
+            moveBlock2(block[1].x, block[1].y);
+            moveBlock(block[0].x, block[0].y);
+        }
 }
 
 
 
 
 
-let newClick;
-//let allInfo;
+
+
 const aBlock=document.querySelectorAll('.block');
 for (i = 0; i <aBlock.length; i += 1) {
     aBlock[i].addEventListener('click', function(e) {
         const focusBlock = e.target.classList[0];
-        //const blockStyle = e.target.getBoundingClientRect();
-        newClick = focusBlock;
         //MAIN MOVEMENT
-        if (focusBlock === 'x0y2') {
+        if (focusBlock === 'x1y2') {
             if (allowedMove(block[1].x + 1, block[1].y)) {
                 moveRight();}
-        } else if (focusBlock === 'x1y2') {
+        } else if (focusBlock === 'x0y2') {
             if (allowedMove(block[0].x - 1, block[0].y)) {
                 moveLeft();}
         //THREE BLOCK A MOVEMENT
@@ -195,7 +188,7 @@ for (i = 0; i <aBlock.length; i += 1) {
             if (allowedMove(threeBlock[2].x, threeBlock[2].y - 1)) {
             moveUp3a();} 
         } else if (focusBlock === 'x3y2') {
-            if (allowedMove(threeBlock[3].x, threeBlock[3].y + 3)) {
+            if (allowedMove(threeBlock[3].x, threeBlock[3].y + 1)) {
             moveDown3a();}
         //TWO BLOCK A MOVEMENT
         } else if (focusBlock === 'x4y1') {
@@ -281,31 +274,27 @@ const moveThreeBlock3 = function(x, y) {
 }
 
 const moveUp3 = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(threeBlock[0].x, threeBlock[0].y - i)) {
-            threeBlock[0].y -= i;
-            threeBlock[1].y -= i;
-            blocks[0].y -= i;
-            blocks[1].y -= i;
-            blocks[2].y -= i;
+        if (allowedMove(threeBlock[0].x, threeBlock[0].y - 1)) {
+            threeBlock[0].y -= 1;
+            threeBlock[1].y -= 1;
+            blocks[0].y -= 1;
+            blocks[1].y -= 1;
+            blocks[2].y -= 1;
             moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
             moveThreeBlock3(threeBlock[1].x, threeBlock[1].y);
         }
-    }
 }
 
 const moveDown3 = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(threeBlock[1].x, threeBlock[1].y + i)) {
-            threeBlock[1].y += i;
-            threeBlock[0].y += i;
-            blocks[2].y += i;
-            blocks[1].y += i;
-            blocks[0].y += i;
+        if (allowedMove(threeBlock[1].x, threeBlock[1].y + 1)) {
+            threeBlock[1].y += 1;
+            threeBlock[0].y += 1;
+            blocks[2].y += 1;
+            blocks[1].y += 1;
+            blocks[0].y += 1;
             moveThreeBlock3(threeBlock[1].x, threeBlock[1].y);
             moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
         }
-    }
 }
 
 //MOVEMENT OF THREE BLOCK x3y0 + x3y2
@@ -321,31 +310,27 @@ const moveThreeBlock2b = function(x, y) {
 }
 
 const moveUp3a = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(threeBlock[2].x, threeBlock[2].y - i)) {
-            threeBlock[2].y -= i;
-            threeBlock[3].y -= i;
-            blocks[3].y -= i;
-            blocks[4].y -= i;
-            blocks[5].y -= i;
+        if (allowedMove(threeBlock[2].x, threeBlock[2].y - 1)) {
+            threeBlock[2].y -= 1;
+            threeBlock[3].y -= 1;
+            blocks[3].y -= 1;
+            blocks[4].y -= 1;
+            blocks[5].y -= 1;
             moveThreeBlock2a(threeBlock[2].x, threeBlock[2].y);
             moveThreeBlock2b(threeBlock[3].x, threeBlock[3].y);
         }
-    }
 }
 
 const moveDown3a = () => {
-    for(let i = 0; i < 6; i += 1) {
-        if (allowedMove(threeBlock[3].x, threeBlock[3].y + i)) {
-            threeBlock[3].y += i;
-            threeBlock[2].y += i;
-            blocks[3].y += i;
-            blocks[4].y += i;
-            blocks[5].y += i;
+        if (allowedMove(threeBlock[3].x, threeBlock[3].y + 1)) {
+            threeBlock[3].y += 1;
+            threeBlock[2].y += 1;
+            blocks[5].y += 1;
+            blocks[4].y += 1;
+            blocks[3].y += 1;
             moveThreeBlock2b(threeBlock[3].x, threeBlock[3].y);
             moveThreeBlock2a(threeBlock[2].x, threeBlock[2].y);
         }
-    }
 }
 
 //MOVEMENT OF TWO BLOCK x4y1 + x4y2
@@ -361,29 +346,25 @@ const moveTwoBlockA2 = function(x, y) {
 }
 
 const moveUp2a = () => {
-    for (let i = 0; i < 6; i += 1){
-        if (allowedMove(twoBlock[0].x, twoBlock[0].y - i)) {
-            twoBlock[1].y -= i;
-            twoBlock[0].y -= i;
-            blocks[6].y -= i;
-            blocks[7].y -= i;
+        if (allowedMove(twoBlock[0].x, twoBlock[0].y - 1)) {
+            twoBlock[1].y -= 1;
+            twoBlock[0].y -= 1;
+            blocks[6].y -= 1;
+            blocks[7].y -= 1;
             moveTwoBlockA(twoBlock[0].x, twoBlock[0].y);
             moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y)
         }
-    }
 }
 
 const moveDown2a = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[1].x, twoBlock[1].y + i)) {
-            twoBlock[1].y += i;
-            twoBlock[0].y += i;
-            blocks[6].y += i;
-            blocks[7].y += i;
+        if (allowedMove(twoBlock[1].x, twoBlock[1].y + 1)) {
+            twoBlock[1].y += 1;
+            twoBlock[0].y += 1;
+            blocks[6].y += 1;
+            blocks[7].y += 1;
             moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y);
             moveTwoBlockA(twoBlock[0].x, twoBlock[0].y)
         }
-    }
 }
 
 //MOVEMENT OF TWO BLOCK x5y1 + x5y2
@@ -399,29 +380,25 @@ const moveTwoBlockB2 = function(x, y) {
 }
 
 const moveUp2b = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[2].x, twoBlock[2].y - i)) {
-            twoBlock[2].y -= i;
-            twoBlock[3].y -= i;
-            blocks[8].y -= i;
-            blocks[9].y -= i;
+        if (allowedMove(twoBlock[2].x, twoBlock[2].y - 1)) {
+            twoBlock[2].y -= 1;
+            twoBlock[3].y -= 1;
+            blocks[8].y -= 1;
+            blocks[9].y -= 1;
             moveTwoBlockB(twoBlock[2].x, twoBlock[2].y);
             moveTwoBlockB2(twoBlock[3].x, twoBlock[3].y)
         }
-    }
 }
 
 const moveDown2b = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[3].x, twoBlock[3].y + i)) {
-            twoBlock[3].y += i;
-            twoBlock[2].y += i;
-            blocks[9].y += i;
-            blocks[8].y += i;
+        if (allowedMove(twoBlock[3].x, twoBlock[3].y + 1)) {
+            twoBlock[3].y += 1;
+            twoBlock[2].y += 1;
+            blocks[9].y += 1;
+            blocks[8].y += 1;
             moveTwoBlockB2(twoBlock[3].x, twoBlock[3].y);
             moveTwoBlockB(twoBlock[2].x, twoBlock[2].y);
         }
-    }
 }
 
 //MOVEMENT FUNCTION FOR TWO BLOCK x5y1 + x5y2
@@ -437,7 +414,6 @@ const moveTwoBlockC2 = function(x, y) {
 }
 
 const moveUp2c = () => {
-    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(twoBlock[4].x, twoBlock[4].y - 1)) {
             twoBlock[4].y -= 1;
             twoBlock[5].y -= 1;
@@ -446,20 +422,17 @@ const moveUp2c = () => {
             moveTwoBlockC(twoBlock[4].x, twoBlock[4].y);
             moveTwoBlockC2(twoBlock[5].x, twoBlock[5].y)
         }
-    }
 }
 
 const moveDown2c = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[5].x, twoBlock[5].y + i)) {
-            twoBlock[5].y += i;
-            twoBlock[4].y += i;
-            blocks[11].y += i;
-            blocks[10].y += i;
+        if (allowedMove(twoBlock[5].x, twoBlock[5].y + 1)) {
+            twoBlock[5].y += 1;
+            twoBlock[4].y += 1;
+            blocks[11].y += 1;
+            blocks[10].y += 1;
             moveTwoBlockC2(twoBlock[5].x, twoBlock[5].y);
             moveTwoBlockC(twoBlock[4].x, twoBlock[4].y);
         }
-    }
 }
 
 //MOVEMENT FUNCTION FOR TWO BLOCK x1y3 + x1y4
@@ -475,7 +448,6 @@ const moveTwoBlockD2 = function(x, y) {
 }
 
 const moveUp2d = () => {
-    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(twoBlock[6].x, twoBlock[6].y - 1)) {
             twoBlock[6].y -= 1;
             twoBlock[7].y -= 1;
@@ -484,20 +456,17 @@ const moveUp2d = () => {
             moveTwoBlockD(twoBlock[6].x, twoBlock[6].y);
             moveTwoBlockD2(twoBlock[7].x, twoBlock[7].y)
         }
-    }
 }
 
 const moveDown2d = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[7].x, twoBlock[7].y + i)) {
-            twoBlock[7].y += i;
-            twoBlock[6].y += i;
-            blocks[13].y += i;
-            blocks[12].y += i;
+        if (allowedMove(twoBlock[7].x, twoBlock[7].y + 1)) {
+            twoBlock[7].y += 1;
+            twoBlock[6].y += 1;
+            blocks[13].y += 1;
+            blocks[12].y += 1;
             moveTwoBlockD2(twoBlock[7].x, twoBlock[7].y);
             moveTwoBlockD(twoBlock[6].x, twoBlock[6].y);
         }
-    }
 }
 
 //MOVEMENT FUNCTION FOR BLOCK x5y3 + x5y4
@@ -513,7 +482,6 @@ const moveTwoBlockE2 = function(x, y) {
 }
 
 const moveUp2e = () => {
-    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(twoBlock[8].x, twoBlock[8].y - 1)) {
             twoBlock[8].y -= 1;
             twoBlock[9].y -= 1;
@@ -522,20 +490,17 @@ const moveUp2e = () => {
             moveTwoBlockE(twoBlock[8].x, twoBlock[8].y);
             moveTwoBlockE2(twoBlock[9].x, twoBlock[9].y)
         }
-    }
 }
 
 const moveDown2e = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(twoBlock[9].x, twoBlock[9].y + i)) {
-            twoBlock[9].y += i;
-            twoBlock[8].y += i;
-            blocks[15].y += i;
-            blocks[14].y += i;
+        if (allowedMove(twoBlock[9].x, twoBlock[9].y + 1)) {
+            twoBlock[9].y += 1;
+            twoBlock[8].y += 1;
+            blocks[15].y += 1;
+            blocks[14].y += 1;
             moveTwoBlockE2(twoBlock[9].x, twoBlock[9].y);
             moveTwoBlockE(twoBlock[8].x, twoBlock[8].y);
         }
-    }
 }
 
 //MOVEMENT FUNCTION FOR HORI BLOCK x2y4 + x3y4
@@ -551,7 +516,6 @@ const moveHoriTwoA2 = function(x, y) {
 }
 
 const moveLeftHori = () => {
-    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(horiTwoBlock[0].x - 1, horiTwoBlock[0].y)) {
             horiTwoBlock[0].x -= 1;
             horiTwoBlock[1].x -= 1;
@@ -560,19 +524,16 @@ const moveLeftHori = () => {
             moveHoriTwoA(horiTwoBlock[0].x, horiTwoBlock[0].y);
             moveHoriTwoA2(horiTwoBlock[1].x, horiTwoBlock[1].y);
         }
-    }
 }
 const moveRightHori = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(horiTwoBlock[1].x + i, horiTwoBlock[1].y)) {
-            horiTwoBlock[1].x += i;
-            horiTwoBlock[0].x += i;
-            blocks[17].x += i;
-            blocks[16].x += i;
+        if (allowedMove(horiTwoBlock[1].x + 1, horiTwoBlock[1].y)) {
+            horiTwoBlock[1].x += 1;
+            horiTwoBlock[0].x += 1;
+            blocks[17].x += 1;
+            blocks[16].x += 1;
             moveHoriTwoA2(horiTwoBlock[1].x, horiTwoBlock[1].y);
             moveHoriTwoA(horiTwoBlock[0].x, horiTwoBlock[0].y);
         }
-    }
 }
 
 
@@ -589,7 +550,6 @@ const moveHoriTwoB2 = function(x, y) {
 }
 
 const moveLeftHoriB = () => {
-    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(horiTwoBlock[2].x - 1, horiTwoBlock[2].y)) {
             horiTwoBlock[2].x -= 1;
             horiTwoBlock[3].x -= 1;
@@ -598,17 +558,14 @@ const moveLeftHoriB = () => {
             moveHoriTwoB(horiTwoBlock[2].x, horiTwoBlock[2].y);
             moveHoriTwoB2(horiTwoBlock[3].x, horiTwoBlock[3].y);
         }
-    }
 }
 const moveRightHoriB = () => {
-    for (let i = 0; i < 6; i += 1) {
-        if (allowedMove(horiTwoBlock[3].x + i, horiTwoBlock[3].y)) {
-            horiTwoBlock[3].x += i;
-            horiTwoBlock[2].x += i;
-            blocks[19].x += i;
-            blocks[18].x += i;
+        if (allowedMove(horiTwoBlock[3].x + 1, horiTwoBlock[3].y)) {
+            horiTwoBlock[3].x += 1;
+            horiTwoBlock[2].x += 1;
+            blocks[19].x += 1;
+            blocks[18].x += 1;
             moveHoriTwoB2(horiTwoBlock[3].x, horiTwoBlock[2].y);
             moveHoriTwoB(horiTwoBlock[2].x, horiTwoBlock[2].y);
         }
-    }
 }

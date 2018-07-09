@@ -51,36 +51,5 @@
 .x1y2, .x4y2, .x2y2, .x3y2, .x5y2, .x0y4, .x1y4, .x5y4, .x3y4, .x2y5 {
     height: 100px;
     width: 100px;
+    outline: none;
 }
-
-
-
-
-/*
-div:focus {
-    border: solid 2px yellow;
-}
-
-.block {
-    position: absolute;
-    height: 100px;
-    width: 200px;
-    outline: solid 1px black;
-    display: inline-block;
-}
-
-.vert {transform: rotate(90deg);}
-
-.three {
-    height: 100px;
-    width: 300px;
-}
-/* fixes alignment problem*/
-.two {transform-origin: top;}
-
-.one {
-    outline: solid 3px blue;
-    top: 200px;
-}
-
-
