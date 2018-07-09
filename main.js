@@ -23,17 +23,24 @@ createGrid();
 
 
 
-const block = {x:0,y:2};
-const threeBlock = [{x:2, y:0}, {x: 3, y: 0}];
-const twoBlock = [{x: 4, y: 1}, {x:4, y: 2}, {x: 5, y: 1}, {x: 0, y: 3}, {x: 1, y: 3}, {x: 5, y: 3}];
-const horiTwoBlock = [{x: 2, y: 4}, {x: 1, y: 5}];
+const block = [{x: 0, y: 2}, {x: 1, y: 2}];
+const threeBlock = [{x: 2, y: 0}, {x: 2, y: 2}, {x: 3, y: 0}, {x: 3, y: 2}];
+const twoBlock = [
+    {x: 4, y: 1}, {x: 4, y: 2},
+    {x: 5, y: 1}, {x: 5, y: 2},
+    {x: 0, y: 3}, {x: 0, y: 4},
+    {x: 1, y: 3}, {x: 1, y: 4},
+    {x: 5, y: 3}, {x: 5, y: 4}];
+const horiTwoBlock = [
+    {x: 2, y: 4}, {x: 3, y: 4},
+    {x: 1, y: 5}, {x: 2, y: 5}];
 const blocks = [
     {x: 2, y: 0}, {x: 2, y: 1}, {x: 2, y: 2},
     {x: 3, y: 0}, {x: 3, y: 1}, {x: 3, y: 2},
     {x: 4, y: 1}, {x: 4, y: 2},
     {x: 5, y: 1}, {x: 5, y: 2},
     {x: 0, y: 3}, {x: 0, y: 4},
-    {x: 1, y: 3}, {x: 0, y: 4},
+    {x: 1, y: 3}, {x: 1, y: 4},
     {x: 5, y: 3}, {x: 5, y: 4},
     {x: 2, y: 4}, {x: 3, y: 4},
     {x: 1, y: 5}, {x: 2, y: 5},
@@ -77,11 +84,14 @@ const render3 = () => {
   renderHori2();
 
   const renderMain = () => {
-      const blockElement = document.createElement('div');
-      blockElement.classList.add(`x${block.x}y${block.y}`, 'main', 'block');
-      blockElement.style.left = (block.x * 100).toString() + 'px';
-      blockElement.style.top = (block.y * 100).toString() + 'px';
-      document.querySelector('#container').appendChild(blockElement);
+      for (let i =0; i< block.length; i += 1) {
+          const main = block[i];
+          const blockElement = document.createElement('div');
+          blockElement.classList.add(`x${block[i].x}y${block[i].y}`, 'main', 'block');
+          blockElement.style.left = (main.x * 100).toString() + 'px';
+          blockElement.style.top = (main.y * 100).toString() + 'px';
+          document.querySelector('#container').appendChild(blockElement);
+    }
   };
   renderMain();
 
@@ -113,75 +123,48 @@ const isThereABlock = function(x, y) {
     return false;
 };
 
-
+//MOVEMENT FUNCTION OF MAIN BLOCK x0y2 + x1y2
 const moveBlock = function(x, y) {
     const block = document.querySelector(`.x0y2`);
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
-    if ( block.x === 4) {
+    if (block.x === 4) {
         win();
     }
 }
+const moveBlock2 = function(x, y) {
+    const block = document.querySelector('.x1y2');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
 
 const moveRight = () => {
-    blocks[21].x += 1;
-    if (allowedMove(block.x + 1, block.y)) {
-        block.x += 1;
-        blocks[20].x += 1;
-        moveBlock(block.x, block.y);
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(block[1].x + i, block[1].y)) {
+            block[1].x += i;
+            block[0].x += i;
+            blocks[20].x += i;
+            blocks[21].x += i;
+            moveBlock2(block[1].x, block[1].y);
+            moveBlock(block[0].x, block[0].y);
+        }
     }
 }
 
 const moveLeft = () => {
-    blocks[21].x -= 1;
-    if (allowedMove(block.x - 1, block.y)) {
-        block.x -= 1;
-        blocks[20].x -= 1;
-        moveBlock(block.x, block.y);
-    }
-}
-
-const moveUp = () => {
-    blocks[21].y -= 1;
-    if (allowedMove(block.x, block.y - 1)) {
-        block.y -= 1;
-        blocks[20].y -= 1;
-        moveBlock(block.x, block.y);
-    }
-}
-
-const moveDown = () => {
-    blocks[21].y += 1;
-    if (allowedMove(block.x, block.y + 1)) {
-        block.y += 1;
-        blocks[20].y += 1;
-        moveBlock(block.x, block.y);
-    }
-}
-
-const movement = function() {
-    console.log('movement');
-    document.body.addEventListener('keydown', function(evt) {
-        const keyCode = evt.keyCode;
-        if ([37, 38, 39, 40].includes(keyCode)){
-            evt.preventDefault;
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(block[0].x - i, block[0].y)) {
+            block[0].x -= i;
+            block[1].x -= i;
+            blocks[20].x -= i;
+            blocks[21].x -= i;
+            moveBlock(block[0].x, block[0].y);
+            moveBlock2(block[1].x, block[1].y);
         }
-        switch(keyCode) {
-            case 37:
-            moveLeft();
-            break;
-            case 38:
-            moveUp();
-            break;
-            case 39:
-            moveRight();
-            break;
-            case 40:
-            moveDown();
-            break;
-        }
-    })
+    }
 }
+
+
 
 
 
@@ -193,24 +176,77 @@ for (i = 0; i <aBlock.length; i += 1) {
         const focusBlock = e.target.classList[0];
         //const blockStyle = e.target.getBoundingClientRect();
         newClick = focusBlock;
+        //MAIN MOVEMENT
         if (focusBlock === 'x0y2') {
-            movement();
+            if (allowedMove(block[1].x + 1, block[1].y)) {
+                moveRight();}
+        } else if (focusBlock === 'x1y2') {
+            if (allowedMove(block[0].x - 1, block[0].y)) {
+                moveLeft();}
+        //THREE BLOCK A MOVEMENT
         } else if (focusBlock === 'x2y0') {
-            movement3();
+            if (allowedMove(threeBlock[0].x, threeBlock[0].y - 1)) {
+                moveUp3();}
+        } else if ( focusBlock === 'x2y2') {
+            if (allowedMove(threeBlock[1].x, threeBlock[1].y + 1)) {
+                moveDown3();}
+        //THREE BLOCK B MOVEMENT
         } else if (focusBlock === 'x3y0') {
-            if (allowedMove(threeBlock[1].x, threeBlock[1].y - 1)) {
-            moveUp3a();} else if (allowedMove(threeBlock[1].x, threeBlock[1].y + 3)) {
-                moveDown3a();
-            }
+            if (allowedMove(threeBlock[2].x, threeBlock[2].y - 1)) {
+            moveUp3a();} 
+        } else if (focusBlock === 'x3y2') {
+            if (allowedMove(threeBlock[3].x, threeBlock[3].y + 3)) {
+            moveDown3a();}
+        //TWO BLOCK A MOVEMENT
         } else if (focusBlock === 'x4y1') {
             if (allowedMove(twoBlock[0].x, twoBlock[0].y - 1)) {
                 moveUp2a();} 
-            }else if (focusBlock === 'x4y2') {
-                if (allowedMove(twoBlock[0].x, twoBlock[0].y + 2)) {
+        } else if (focusBlock === 'x4y2') {
+            if (allowedMove(twoBlock[1].x, twoBlock[1].y + 1)) {
                 moveDown2a();}
+        //TWO BLOCK B MOVEMENT
         } else if (focusBlock === 'x5y1') {
-            movement2b();
-        }
+            if (allowedMove(twoBlock[2].x, twoBlock[2].y - 1)) {
+                moveUp2b();}
+        } else if (focusBlock === 'x5y2') {
+            if (allowedMove(twoBlock[3].x, twoBlock[3].y + 1)) {
+                moveDown2b();}
+        //TWO BLOCK C MOVEMENT
+        } else if (focusBlock === 'x0y3') {
+            if (allowedMove(twoBlock[4].x, twoBlock[4].y - 1)) {
+                moveUp2c();}
+        } else if (focusBlock === 'x0y4') {
+            if (allowedMove(twoBlock[5].x, twoBlock[5].y + 1)) {
+                moveDown2c();}
+        //TWO BLOCK D MOVEMENT
+        } else if (focusBlock === 'x1y3') {
+            if (allowedMove(twoBlock[6].x, twoBlock[6].y - 1)) {
+                moveUp2d();}
+        } else if (focusBlock === 'x1y4') {
+            if (allowedMove(twoBlock[7].x, twoBlock[7].y + 1)) {
+                moveDown2d();}
+        //TWO BLOCK E MOVEMENT
+        } else if (focusBlock === 'x5y3') {
+            if (allowedMove(twoBlock[8].x, twoBlock[8].y - 1)) {
+                moveUp2e();}
+        } else if (focusBlock === 'x5y4') {
+            if (allowedMove(twoBlock[9].x, twoBlock[9].y + 1)) {
+                moveDown2e();}
+        //HORI TWO BLOCK MOVEMENT
+        } else if (focusBlock === 'x2y4') {
+            if (allowedMove(horiTwoBlock[0].x - 1, horiTwoBlock[0].y)) {
+                moveLeftHori();}
+        } else if (focusBlock === 'x3y4') {
+            if (allowedMove(horiTwoBlock[1].x + 1, horiTwoBlock[1].y)) {
+                moveRightHori();}
+        //HORI TWO BLOCK B MOVEMENT
+        } else if (focusBlock === 'x1y5') {
+            if (allowedMove(horiTwoBlock[2].x - 1, horiTwoBlock[2].y)) {
+                moveLeftHoriB();}
+        } else if (focusBlock === 'x2y5') {
+            if (allowedMove(horiTwoBlock[3].x + 1, horiTwoBlock[3].y)) {
+                moveRightHoriB();}
+            }
         //allInfo = [focusBlock, blockStyle];
         console.log(focusBlock);
         //console.log(blockStyle);
@@ -232,99 +268,87 @@ const win = function() {
 
 
 
-// MOVEMENT OF THREE BLOCK x2y0
+// MOVEMENT OF THREE BLOCK x2y0 + x2y2
 const moveThreeBlock = function(x, y) {
     const block = document.querySelector(`.x2y0`);
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
+const moveThreeBlock3 = function(x, y) {
+    const block = document.querySelector('.x2y2');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
 
 const moveUp3 = () => {
-    blocks[1].y -= 1;
-    blocks[2].y -= 1;
-    if (allowedMove(threeBlock[0].x, threeBlock[0].y - 1)) {
-        threeBlock[0].y -= 1;
-        blocks[0].y -= 1;
-        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(threeBlock[0].x, threeBlock[0].y - i)) {
+            threeBlock[0].y -= i;
+            threeBlock[1].y -= i;
+            blocks[0].y -= i;
+            blocks[1].y -= i;
+            blocks[2].y -= i;
+            moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+            moveThreeBlock3(threeBlock[1].x, threeBlock[1].y);
+        }
     }
 }
 
 const moveDown3 = () => {
-    blocks[1].y += 1;
-    blocks[2].y += 1;
-    if (allowedMove(threeBlock[0].x, threeBlock[0].y + 1)) {
-        threeBlock[0].y += 1;
-        blocks[0].y += 1;
-        moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(threeBlock[1].x, threeBlock[1].y + i)) {
+            threeBlock[1].y += i;
+            threeBlock[0].y += i;
+            blocks[2].y += i;
+            blocks[1].y += i;
+            blocks[0].y += i;
+            moveThreeBlock3(threeBlock[1].x, threeBlock[1].y);
+            moveThreeBlock(threeBlock[0].x, threeBlock[0].y);
+        }
     }
 }
-const movement3 = function() {
-    console.log('movement');
-    document.body.addEventListener('keydown', function(evt) {
-        const keyCode = evt.keyCode;
-        if ([37, 38, 39, 40].includes(keyCode)){
-            evt.preventDefault;
-        }
-        switch(keyCode) {
-            case 38:
-            moveUp3();
-            break;
-            case 40:
-            moveDown3();
-            break;
-        }
-    })
-}
-//MOVEMENT OF THREE BLOCK x3y0
-const moveThreeBlock2 = function(x, y) {
+
+//MOVEMENT OF THREE BLOCK x3y0 + x3y2
+const moveThreeBlock2a = function(x, y) {
     const block = document.querySelector(`.x3y0`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveThreeBlock2b = function(x, y) {
+    const block = document.querySelector('.x3y2');
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
 
 const moveUp3a = () => {
-    for (let i=0;i<6;i+=1) {
-        blocks[4].y -= i;
-        blocks[5].y -= i;
-        if (allowedMove(threeBlock[1].x, threeBlock[1].y - i)) {
-            threeBlock[1].y -= i;
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(threeBlock[2].x, threeBlock[2].y - i)) {
+            threeBlock[2].y -= i;
+            threeBlock[3].y -= i;
             blocks[3].y -= i;
-            moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+            blocks[4].y -= i;
+            blocks[5].y -= i;
+            moveThreeBlock2a(threeBlock[2].x, threeBlock[2].y);
+            moveThreeBlock2b(threeBlock[3].x, threeBlock[3].y);
         }
-
     }
 }
 
 const moveDown3a = () => {
-    for(let i=0;i<6;i+=1) {
-        blocks[4].y += i;
-        blocks[5].y += i;
-        if (allowedMove(threeBlock[1].x, threeBlock[1].y + i)) {
-            threeBlock[1].y += i;
+    for(let i = 0; i < 6; i += 1) {
+        if (allowedMove(threeBlock[3].x, threeBlock[3].y + i)) {
+            threeBlock[3].y += i;
+            threeBlock[2].y += i;
             blocks[3].y += i;
-            moveThreeBlock2(threeBlock[1].x, threeBlock[1].y);
+            blocks[4].y += i;
+            blocks[5].y += i;
+            moveThreeBlock2b(threeBlock[3].x, threeBlock[3].y);
+            moveThreeBlock2a(threeBlock[2].x, threeBlock[2].y);
         }
-
     }
 }
-const movement3a = function() {
-    console.log('movement');
-    document.body.addEventListener('keydown', function(evt) {
-        const keyCode = evt.keyCode;
-        if ([37, 38, 39, 40].includes(keyCode)){
-            evt.preventDefault;
-        }
-        switch(keyCode) {
-            case 38:
-            moveUp3a();
-            break;
-            case 40:
-            moveDown3a();
-            break;
-        }
-    })
-}
-//MOVEMENT OF TWO BLOCK x4y1
+
+//MOVEMENT OF TWO BLOCK x4y1 + x4y2
 const moveTwoBlockA = function(x, y) {
     const block = document.querySelector(`.x4y1`);
     block.style.top = (y * 100).toString() + 'px';
@@ -337,7 +361,7 @@ const moveTwoBlockA2 = function(x, y) {
 }
 
 const moveUp2a = () => {
-    for (let i = -1; i <6; i+=1){
+    for (let i = 0; i < 6; i += 1){
         if (allowedMove(twoBlock[0].x, twoBlock[0].y - i)) {
             twoBlock[1].y -= i;
             twoBlock[0].y -= i;
@@ -346,12 +370,11 @@ const moveUp2a = () => {
             moveTwoBlockA(twoBlock[0].x, twoBlock[0].y);
             moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y)
         }
-
     }
 }
 
 const moveDown2a = () => {
-    for (let i = -1; i<6;i+=1) {
+    for (let i = 0; i < 6; i += 1) {
         if (allowedMove(twoBlock[1].x, twoBlock[1].y + i)) {
             twoBlock[1].y += i;
             twoBlock[0].y += i;
@@ -360,64 +383,232 @@ const moveDown2a = () => {
             moveTwoBlockA2(twoBlock[1].x, twoBlock[1].y);
             moveTwoBlockA(twoBlock[0].x, twoBlock[0].y)
         }
-
     }
 }
-const movement2a = function() {
-    console.log('movement');
-    document.body.addEventListener('keydown', function(evt) {
-        const keyCode = evt.keyCode;
-        if ([37, 38, 39, 40].includes(keyCode)){
-            evt.preventDefault;
-        }
-        switch(keyCode) {
-            case 38:
-            moveUp2a();
-            break;
-            case 40:
-            moveDown2a();
-            break;
-        }
-    })
-}
-//MOVEMENT OF TWO BLOCK x5y1
-/*const moveTwoBlockB = function(x, y) {
+
+//MOVEMENT OF TWO BLOCK x5y1 + x5y2
+const moveTwoBlockB = function(x, y) {
     const block = document.querySelector(`.x5y1`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveTwoBlockB2 = function(x, y) {
+    const block = document.querySelector('.x5y2');
     block.style.top = (y * 100).toString() + 'px';
     block.style.left = (x * 100).toString() + 'px';
 }
 
 const moveUp2b = () => {
-    blocks[9].y -= 1;
-    if (allowedMove(twoBlock[1].x, twoBlock[1].y - 1)) {
-        twoBlock[1].y -= 1;
-        blocks[8].y -= 1;
-        moveTwoBlockB(twoBlock[1].x, twoBlock[1].y);
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[2].x, twoBlock[2].y - i)) {
+            twoBlock[2].y -= i;
+            twoBlock[3].y -= i;
+            blocks[8].y -= i;
+            blocks[9].y -= i;
+            moveTwoBlockB(twoBlock[2].x, twoBlock[2].y);
+            moveTwoBlockB2(twoBlock[3].x, twoBlock[3].y)
+        }
     }
 }
 
 const moveDown2b = () => {
-    blocks[9].y += 1;
-    if (allowedMove(twoBlock[1].x, twoBlock[1].y + 1)) {
-        twoBlock[1].y += 1;
-        blocks[8].y += 1;
-        moveTwoBlockB(twoBlock[1].x, twoBlock[1].y);
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[3].x, twoBlock[3].y + i)) {
+            twoBlock[3].y += i;
+            twoBlock[2].y += i;
+            blocks[9].y += i;
+            blocks[8].y += i;
+            moveTwoBlockB2(twoBlock[3].x, twoBlock[3].y);
+            moveTwoBlockB(twoBlock[2].x, twoBlock[2].y);
+        }
     }
 }
-const movement2b = function() {
-    console.log('movement');
-    document.body.addEventListener('keydown', function(evt) {
-        const keyCode = evt.keyCode;
-        if ([37, 38, 39, 40].includes(keyCode)){
-            evt.preventDefault;
+
+//MOVEMENT FUNCTION FOR TWO BLOCK x5y1 + x5y2
+const moveTwoBlockC = function(x, y) {
+    const block = document.querySelector(`.x0y3`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveTwoBlockC2 = function(x, y) {
+    const block = document.querySelector('.x0y4');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveUp2c = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[4].x, twoBlock[4].y - 1)) {
+            twoBlock[4].y -= 1;
+            twoBlock[5].y -= 1;
+            blocks[10].y -= 1;
+            blocks[11].y -= 1;
+            moveTwoBlockC(twoBlock[4].x, twoBlock[4].y);
+            moveTwoBlockC2(twoBlock[5].x, twoBlock[5].y)
         }
-        switch(keyCode) {
-            case 38:
-            moveUp2b();
-            break;
-            case 40:
-            moveDown2b();
-            break;
+    }
+}
+
+const moveDown2c = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[5].x, twoBlock[5].y + i)) {
+            twoBlock[5].y += i;
+            twoBlock[4].y += i;
+            blocks[11].y += i;
+            blocks[10].y += i;
+            moveTwoBlockC2(twoBlock[5].x, twoBlock[5].y);
+            moveTwoBlockC(twoBlock[4].x, twoBlock[4].y);
         }
-    })
-}*/
+    }
+}
+
+//MOVEMENT FUNCTION FOR TWO BLOCK x1y3 + x1y4
+const moveTwoBlockD = function(x, y) {
+    const block = document.querySelector(`.x1y3`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveTwoBlockD2 = function(x, y) {
+    const block = document.querySelector('.x1y4');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveUp2d = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[6].x, twoBlock[6].y - 1)) {
+            twoBlock[6].y -= 1;
+            twoBlock[7].y -= 1;
+            blocks[12].y -= 1;
+            blocks[13].y -= 1;
+            moveTwoBlockD(twoBlock[6].x, twoBlock[6].y);
+            moveTwoBlockD2(twoBlock[7].x, twoBlock[7].y)
+        }
+    }
+}
+
+const moveDown2d = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[7].x, twoBlock[7].y + i)) {
+            twoBlock[7].y += i;
+            twoBlock[6].y += i;
+            blocks[13].y += i;
+            blocks[12].y += i;
+            moveTwoBlockD2(twoBlock[7].x, twoBlock[7].y);
+            moveTwoBlockD(twoBlock[6].x, twoBlock[6].y);
+        }
+    }
+}
+
+//MOVEMENT FUNCTION FOR BLOCK x5y3 + x5y4
+const moveTwoBlockE = function(x, y) {
+    const block = document.querySelector(`.x5y3`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveTwoBlockE2 = function(x, y) {
+    const block = document.querySelector('.x5y4');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveUp2e = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[8].x, twoBlock[8].y - 1)) {
+            twoBlock[8].y -= 1;
+            twoBlock[9].y -= 1;
+            blocks[14].y -= 1;
+            blocks[15].y -= 1;
+            moveTwoBlockE(twoBlock[8].x, twoBlock[8].y);
+            moveTwoBlockE2(twoBlock[9].x, twoBlock[9].y)
+        }
+    }
+}
+
+const moveDown2e = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(twoBlock[9].x, twoBlock[9].y + i)) {
+            twoBlock[9].y += i;
+            twoBlock[8].y += i;
+            blocks[15].y += i;
+            blocks[14].y += i;
+            moveTwoBlockE2(twoBlock[9].x, twoBlock[9].y);
+            moveTwoBlockE(twoBlock[8].x, twoBlock[8].y);
+        }
+    }
+}
+
+//MOVEMENT FUNCTION FOR HORI BLOCK x2y4 + x3y4
+const moveHoriTwoA = function(x, y) {
+    const block = document.querySelector(`.x2y4`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveHoriTwoA2 = function(x, y) {
+    const block = document.querySelector('.x3y4');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveLeftHori = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(horiTwoBlock[0].x - 1, horiTwoBlock[0].y)) {
+            horiTwoBlock[0].x -= 1;
+            horiTwoBlock[1].x -= 1;
+            blocks[16].x -= 1;
+            blocks[17].x -= 1;
+            moveHoriTwoA(horiTwoBlock[0].x, horiTwoBlock[0].y);
+            moveHoriTwoA2(horiTwoBlock[1].x, horiTwoBlock[1].y);
+        }
+    }
+}
+const moveRightHori = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(horiTwoBlock[1].x + i, horiTwoBlock[1].y)) {
+            horiTwoBlock[1].x += i;
+            horiTwoBlock[0].x += i;
+            blocks[17].x += i;
+            blocks[16].x += i;
+            moveHoriTwoA2(horiTwoBlock[1].x, horiTwoBlock[1].y);
+            moveHoriTwoA(horiTwoBlock[0].x, horiTwoBlock[0].y);
+        }
+    }
+}
+
+
+//MOVEMENT FUNCTION FOR HORI BLOCK x1y5 + x2y5
+const moveHoriTwoB = function(x, y) {
+    const block = document.querySelector(`.x1y5`);
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+const moveHoriTwoB2 = function(x, y) {
+    const block = document.querySelector('.x2y5');
+    block.style.top = (y * 100).toString() + 'px';
+    block.style.left = (x * 100).toString() + 'px';
+}
+
+const moveLeftHoriB = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(horiTwoBlock[2].x - 1, horiTwoBlock[2].y)) {
+            horiTwoBlock[2].x -= 1;
+            horiTwoBlock[3].x -= 1;
+            blocks[18].x -= 1;
+            blocks[19].x -= 1;
+            moveHoriTwoB(horiTwoBlock[2].x, horiTwoBlock[2].y);
+            moveHoriTwoB2(horiTwoBlock[3].x, horiTwoBlock[3].y);
+        }
+    }
+}
+const moveRightHoriB = () => {
+    for (let i = 0; i < 6; i += 1) {
+        if (allowedMove(horiTwoBlock[3].x + i, horiTwoBlock[3].y)) {
+            horiTwoBlock[3].x += i;
+            horiTwoBlock[2].x += i;
+            blocks[19].x += i;
+            blocks[18].x += i;
+            moveHoriTwoB2(horiTwoBlock[3].x, horiTwoBlock[2].y);
+            moveHoriTwoB(horiTwoBlock[2].x, horiTwoBlock[2].y);
+        }
+    }
+}
