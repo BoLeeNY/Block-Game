@@ -26,7 +26,9 @@ The idea is to have the blocks slide in the direction that they are oriented.
 But also, the blocks should not be able to pass through other blocks or leave the grid.
 So I created a new array that I can reference for the collision detection.
 The movement function would only allow the block to move if there was not a block in the way and it was still inside the grid.
-```if (allowedMove(block[0].x - 1, block[0].y)) { 
+```
+const moveLeft = () => {
+if (allowedMove(block[0].x - 1, block[0].y)) { 
 block[0].x -= 1; 
 moveBlock(block[0].x, block[0].y);}
 ```
