@@ -1,4 +1,4 @@
-### Get Me Out
+## Get Me Out
 
 Get Me Out is a block puzzle game. The objective is to get the gold block to the right side of the screen.
 Vertical blocks can only move vertically and horizontal blocks can only move horizontally.
